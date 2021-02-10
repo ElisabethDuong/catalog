@@ -1,8 +1,9 @@
 import React from "react"
 import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
-import MovieCard from "./components/MovieCard";
-// import "bootstrap/dist/css/bootstrap.min.css";
+import Movie from "./components/Movie";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+
 
 const movies = [
   {
@@ -116,17 +117,18 @@ class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
-        <div>
+        {movies.map((movie) => {
+          return (<Link to={`/movie/${movie.id}`}>{movie.title}</Link>)
+            ;
+        })}
 
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Link to="/">Home</Link>
+        <Switch>
+          <Route path="/movie/:id" render={(props) => {
+            return (<Movie {...props} movies={movies} />)
+          }} />
+          <Link to="/"></Link>
 
-            <Route path="/movies/:id" component={MovieCard} />
-            <Link to="/"></Link>
-
-          </Switch>
-        </div>
+        </Switch>
       </BrowserRouter>
     );
   }
